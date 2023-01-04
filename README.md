@@ -1,8 +1,11 @@
 # React Native, Typescript, and Tailwind CSS Design System ✨
 
+[![MIT License](https://img.shields.io/github/license/FlemingVincent/rn-ts-tw-design-system)](https://https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/LICENSE)
+
 This is an example project, showcasing how a design system can be developed using React Native, Typescript, and Tailwind CSS.
 
 ## Motivation:
+
 
 For the most part, this repository is a personal guide for creating a design system for a mobile application using React Native, TypeScript, and Tailwind CSS.
 
@@ -11,7 +14,8 @@ Additionally, this repository serves as a playground and canvas for me as I lear
 Disclaimer:
 This is not supposed to be a template or boilerplate. It is an opinionated guide that shows how to do some things in a certain way. You are not forced to do everything exactly as it is shown here, and if you decide or discover a better way to do so, do what works best for you and stay consistent.
 
-## Quick Start
+## Quick Start:
+
 
 ```
 git clone https://github.com/FlemingVincent/rn-ts-tw-design-system.git
@@ -25,152 +29,76 @@ yarn start
 
 ## Components/Features:
 
+
 ### Components
 
-- Button - a strongly typed button component, allowing users to select a variant and a label, while also extending the default `TouchableOpacityProps`.
 
-```tsx
-import React, { FC } from "react";
-import { Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
+**Button**
 
-import tw from "@/lib/tailwind";
+A strongly typed button component, allowing users to select a variant and a label, while also extending the default `TouchableOpacityProps`.
 
-type ButtonVariant = "default" | "outline";
+[See example Button component](https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/src/components/Button/Button.tsx)
 
-interface ButtonProps extends TouchableOpacityProps {
-	intent?: ButtonVariant;
-	label?: string;
-	containerStyle?: TouchableOpacityProps["style"];
-}
 
-const Button: FC<ButtonProps> = ({
-	intent = "default",
-	label = "Button",
-	containerStyle,
-	...props
-}) => {
-	return (
-		<TouchableOpacity
-			style={[
-				tw`flex w-full h-[50px] items-center justify-center rounded-[8px]`,
-				intent === "default" && tw`bg-themeBlack dark:bg-themeWhite`,
-				intent === "outline" &&
-					tw`border-[1px] border-themeBlack dark:border-themeWhite`,
-				containerStyle,
-			]}
-			{...props}
-		>
-			<Text
-				style={[
-					tw`text-body font-semibold`,
-					intent === "outline"
-						? tw`text-themeBlack dark:text-themeWhite`
-						: tw``,
-				]}
-			>
-				{label}
-			</Text>
-		</TouchableOpacity>
-	);
-};
+**TextField** 
 
-export default Button;
-```
+A strongly typed, custom TextInput component allowing users to select a variant and to display an icon or not. Additonally, this component extends the default `TextInputProps`.
 
-- TextField - a strongly typed, custom TextInput component allowing users to select a variant and to display an icon or not. Additonally, this component extends the default `TextInputProps`.
+[See example TextField component](https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/src/components/TextField/TextField.tsx)
 
-```tsx
-import React, { FC } from "react";
-import { TextInput, TextInputProps, View, ViewProps } from "react-native";
-
-import tw from "@/lib/tailwind";
-
-type TextFieldVariant = "default" | "success" | "error";
-
-interface TextFieldProps extends TextInputProps {
-	intent?: TextFieldVariant;
-	icon?: React.ReactNode;
-	containerStyle?: ViewProps["style"];
-}
-
-const TextField: FC<TextFieldProps> = ({
-	intent = "default",
-	icon,
-	containerStyle,
-	...props
-}) => {
-	return (
-		<View
-			style={[
-				tw`flex flex-row w-full h-[50px] items-center justify-between px-4 border-b`,
-				intent === "default"
-					? tw`border-b-themeBlack dark:border-b-themeWhite`
-					: tw``,
-				intent === "success" ? tw`border-b-themeGreen` : tw``,
-				intent === "error" ? tw`border-b-darkRed` : tw``,
-				containerStyle,
-			]}
-		>
-			<TextInput
-				style={[
-					tw`flex flex-1 h-[50px] text-body text-themeAccent`,
-					icon ? tw`pr-2` : tw``,
-				]}
-				placeholderTextColor={tw.color("themeAccent")}
-				autoCapitalize="none"
-				autoCorrect={false}
-				{...props}
-			/>
-			{icon}
-		</View>
-	);
-};
-
-export default TextField;
-```
 
 ### Features
 
-- Custom Tailwind Configuration ([tailwind.config.js](https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/tailwind.config.js)) - Which showcases how to properly create a custom theme using colors and different typographic styles.
 
-- Light/Dark mode support ([App.tsx](https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/App.tsx))
+**Custom Tailwind Configuration**
 
-```tsx
-useDeviceContext(tw, { withDeviceColorScheme: false });
-const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
-```
+This file showcases how to properly create a custom theme using colors and different typographic styles.
 
-- Absolute Imports ([tsconfig.json](https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/tsconfig.json) & [babel.config.js](https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/babel.config.js))
+[See Tailwind configuration file](https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/tailwind.config.js)
 
+
+**Light/Dark mode support**
+
+[See example of implementation](https://github.com/FlemingVincent/rn-ts-tw-design-system/blob/main/App.tsx)
+
+
+**Absolute Imports**
+
+Absolute imports should always be configured and used because it makes it easier to move files around and avoid messy import paths such as ```../../../Component```. Wherever you move the file, all the imports will remain intact. Here is how to configure it:
+
+
+TypeScript (```tsconfig.json```)
 ```json
 {
-	"extends": "expo/tsconfig.base",
-	"compilerOptions": {
-		"strict": true,
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"]
-		}
-	}
+  "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+      "strict": true,
+      "baseUrl": ".",
+      "paths": {
+      "@/*": ["./src/*"]
+      }
+    }
 }
 ```
 
+
+Babel (```babel.config.js```)
 ```js
 module.exports = function (api) {
-	api.cache(true);
-	return {
-		presets: ["babel-preset-expo"],
-		plugins: [
-			[
-				"module-resolver",
-				{
-					alias: {
-						"@": "./src",
-					},
-				},
-			],
-		],
-	};
+  api.cache(true);
+  return {
+    presets: ["babel-preset-expo"],
+    plugins: [
+      [
+        "module-resolver",
+	  {
+	    alias: {
+	      "@": "./src",
+	    },
+	  },
+      ],
+    ],
+  };
 };
 ```
 
