@@ -31,9 +31,7 @@ const Button: FC<ButtonProps> = ({
 			<Text
 				style={[
 					tw`text-body font-semibold`,
-					intent === "outline"
-						? tw`text-themeBlack dark:text-themeWhite`
-						: tw``,
+					intent === "outline" && tw`text-themeBlack dark:text-themeWhite`,
 				]}
 			>
 				{label}

@@ -21,18 +21,17 @@ const TextField: FC<TextFieldProps> = ({
 		<View
 			style={[
 				tw`flex flex-row w-full h-[50px] items-center justify-between px-4 border-b`,
-				intent === "default"
-					? tw`border-b-themeBlack dark:border-b-themeWhite`
-					: tw``,
-				intent === "success" ? tw`border-b-themeGreen` : tw``,
-				intent === "error" ? tw`border-b-darkRed` : tw``,
+				intent === "default" &&
+					tw`border-b-themeBlack dark:border-b-themeWhite`,
+				intent === "success" && tw`border-b-themeGreen`,
+				intent === "error" && tw`border-b-darkRed`,
 				containerStyle,
 			]}
 		>
 			<TextInput
 				style={[
 					tw`flex flex-1 h-[50px] text-body text-themeAccent`,
-					icon ? tw`pr-2` : tw``,
+					icon ? tw`pr-2` : tw`pr-0`,
 				]}
 				placeholderTextColor={tw.color("themeAccent")}
 				autoCapitalize="none"
